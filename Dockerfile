@@ -68,7 +68,7 @@ WORKDIR /comfyui
 RUN mkdir -p models/checkpoints models/vae
 
 # Download checkpoints/vae/LoRA to include in image based on model type
-RUN if [ "$MODEL_TYPE" = "aip" ]; then \
+RUN if [ "$MODEL_TYPE" = "sdxl" ]; then \
         wget -O models/checkpoints/realvisxlV50_v50Bakedvae.safetensors https://huggingface.co/frankjoshua/realvisxlV50_v50Bakedvae/resolve/main/realvisxlV50_v50Bakedvae.safetensors && \
         wget -O models/checkpoints/Juggernaut_X_RunDiffusion.safetensors https://huggingface.co/RunDiffusion/Juggernaut-X-v10/resolve/main/Juggernaut-X-RunDiffusion-NSFW.safetensors && \
         wget -O models/checkpoints/sdXL_v10RefinerVAEFix.safetensors https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0.safetensors && \
