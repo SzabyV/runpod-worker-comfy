@@ -66,7 +66,9 @@ WORKDIR /comfyui
 
 # Create necessary directories
 RUN mkdir -p models/checkpoints models/vae
-RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models  
+RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models
+
+RUN mkdir -p custom_nodes   
 
 
 RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /custom_nodes
