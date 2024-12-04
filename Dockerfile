@@ -118,6 +118,7 @@ RUN if [ "$MODEL_TYPE" = "sdxl" ]; then \
         RUN wget -O models/sams/sam_vit_b_01ec64.pth https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/sams/sam_vit_b_01ec64.pth &&\
         wget -O models/upscale_models/RealESRGAN_x4plus.pth https://huggingface.co/lllyasviel/Annotators/resolve/main/RealESRGAN_x4plus.pth
     fi
+      #comment
 
 # Stage 3: Final image
 FROM base as final
