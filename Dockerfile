@@ -71,15 +71,15 @@ RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision 
 RUN mkdir -p custom_nodes   
 
 
-RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /custom_nodes
-RUN git clone https://github.com/Fannovel16/comfyui_controlnet_aux /custom_nodes
-RUN git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes /custom_nodes
-RUN git clone https://github.com/SeargeDP/SeargeSDXL /custom_nodes
-RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus /custom_nodes
-RUN git clone https://github.com/evanspearman/ComfyMath /custom_nodes
-RUN git clone https://github.com/theUpsider/ComfyUI-Logic /custom_nodes
-RUN git clone https://github.com/rgthree/rgthree-comfy /custom_nodes
-RUN git clone https://github.com/chflame163/ComfyUI_LayerStyle /custom_nodes
+RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /custom_nodes/ComfyUI-Impact-Pack
+RUN git clone https://github.com/Fannovel16/comfyui_controlnet_aux /custom_nodes/comfyui_controlnet_aux
+RUN git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes /custom_nodes/ComfyUI_Comfyroll_CustomNodes
+RUN git clone https://github.com/SeargeDP/SeargeSDXL /custom_nodes/SeargeSDXL
+RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus /custom_nodes/ComfyUI_IPAdapter_plus
+RUN git clone https://github.com/evanspearman/ComfyMath /custom_nodes/ComfyMath
+RUN git clone https://github.com/theUpsider/ComfyUI-Logic /custom_nodes/ComfyUI-Logic
+RUN git clone https://github.com/rgthree/rgthree-comfy /custom_nodes/rgthree-comfy
+RUN git clone https://github.com/chflame163/ComfyUI_LayerStyle /custom_nodes/ComfyUI_LayerStyle
 
 # Download checkpoints/vae/LoRA to include in image based on model type
 
