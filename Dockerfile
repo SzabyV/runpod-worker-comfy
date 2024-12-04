@@ -66,7 +66,18 @@ WORKDIR /comfyui
 
 # Create necessary directories
 RUN mkdir -p models/checkpoints models/vae
-RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models   
+RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models  
+
+
+RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /comfyui/custom_nodes
+RUN git clone https://github.com/Fannovel16/comfyui_controlnet_aux /comfyui/custom_nodes
+RUN git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes /comfyui/custom_nodes
+RUN git clone https://github.com/SeargeDP/SeargeSDXL /comfyui/custom_nodes
+RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus /comfyui/custom_nodes
+RUN git clone https://github.com/evanspearman/ComfyMath /comfyui/custom_nodes
+RUN git clone https://github.com/theUpsider/ComfyUI-Logic /comfyui/custom_nodes
+RUN git clone https://github.com/rgthree/rgthree-comfy /comfyui/custom_nodes
+RUN git clone https://github.com/chflame163/ComfyUI_LayerStyle /comfyui/custom_nodes
 
 # Download checkpoints/vae/LoRA to include in image based on model type
 
@@ -113,7 +124,7 @@ RUN if [ "$MODEL_TYPE" = "flux1-dev" ]; then \
         wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/vae/ae.safetensors https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/ae.safetensors; \
     fi
 
-    
+
 #RUN if [ "$MODEL_TYPE" = "sdxl" ]; then \
         #wget -O models/checkpoints/realvisxlV50_v50Bakedvae.safetensors https://huggingface.co/frankjoshua/realvisxlV50_v50Bakedvae/resolve/main/realvisxlV50_v50Bakedvae.safetensors && \
         #wget -O models/checkpoints/Juggernaut_X_RunDiffusion.safetensors https://huggingface.co/RunDiffusion/Juggernaut-X-v10/resolve/main/Juggernaut-X-RunDiffusion-NSFW.safetensors && \
