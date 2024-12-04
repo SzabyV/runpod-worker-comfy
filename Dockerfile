@@ -25,6 +25,7 @@ RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Install comfy-cli
 RUN pip install comfy-cli
+#RUN pip install gdown
 
 # Install ComfyUI
 RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvidia --version 0.2.7
@@ -104,11 +105,19 @@ RUN if [ "$MODEL_TYPE" = "sdxl" ]; then \
         wget -O models/loras/ip-adapter_sdxl.safetensors https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter_sdxl.safetensors && \
         wget -O models/loras/InteriorDesignUniversal_XL_v1.0.safetensors https://huggingface.co/insprt/Interior-Design-Universal/resolve/main/Interior-Design-UniversalXL_v1.0.safetensors && \
         wget -O models/loras/JZCGXL026_AerialView.safetensors https://civitai.com/api/download/models/406691?type=Model&format=SafeTensor && \
-        wget -O models/loras/JZCGXL026_AerialView.safetensors https://civitai.com/api/download/models/406691?type=Model&format=SafeTensor && \
         wget -O models/loras/SketchuraXL_LoRA.safetensors https://civitai.com/api/download/models/586867?type=Model&format=SafeTensor && \
         wget -O models/loras/xl_more_art-full_v1.safetensors https://civitai.com/api/download/models/152309?type=Model&format=SafeTensor && \
         wget -O models/loras/Jiangda_xiaoguotu_0.2.safetensors https://civitai.com/api/download/models/130291?type=Model&format=SafeTensor && \
         wget -O models/loras/lwmirXL-V1.0fp16.safetensors https://civitai.com/api/download/models/128403?type=Model&format=SafeTensor
+        #wget -O models/loras/ModelMaker-XL.safetensors https://drive.google.com/uc?export=download&id=1zr39Hobx062pqEUYcgCov8V18MR_oLHn
+        WORKDIR /comfyui/models/loras
+        RUN gdown 1zr39Hobx062pqEUYcgCov8V18MR_oLHn
+        RUN gdown 1njfgedJ9EmXUCE3-aDMejXD-RpDMIZJL
+        RUN gdown 1qZtEAlzBtbApZN2TLu9M2bmOORknXTfo
+        WORKDIR /comfyui
+        RUN wget -O models/sams/sam_vit_b_01ec64.pth https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/sams/sam_vit_b_01ec64.pth &&\
+        wget -O models/upscale_models/RealESRGAN_x4plus.pth https://huggingface.co/lllyasviel/Annotators/resolve/main/RealESRGAN_x4plus.pth
+        
     fi
 
 # Stage 3: Final image
