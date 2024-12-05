@@ -68,18 +68,17 @@ WORKDIR /comfyui
 RUN mkdir -p models/checkpoints models/vae
 RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models
 
-RUN mkdir -p custom_nodes   
+#RUN mkdir -p custom_nodes   
 
 
-RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /custom_nodes/ComfyUI-Impact-Pack
-RUN git clone https://github.com/Fannovel16/comfyui_controlnet_aux /custom_nodes/comfyui_controlnet_aux
-RUN git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes /custom_nodes/ComfyUI_Comfyroll_CustomNodes
-RUN git clone https://github.com/SeargeDP/SeargeSDXL /custom_nodes/SeargeSDXL
-RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus /custom_nodes/ComfyUI_IPAdapter_plus
-RUN git clone https://github.com/evanspearman/ComfyMath /custom_nodes/ComfyMath
-RUN git clone https://github.com/theUpsider/ComfyUI-Logic /custom_nodes/ComfyUI-Logic
-RUN git clone https://github.com/rgthree/rgthree-comfy /custom_nodes/rgthree-comfy
-RUN git clone https://github.com/chflame163/ComfyUI_LayerStyle /custom_nodes/ComfyUI_LayerStyle
+#RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /custom_nodes/ComfyUI-Impact-Pack
+#RUN git clone https://github.com/Fannovel16/comfyui_controlnet_aux /custom_nodes/comfyui_controlnet_aux
+#RUN git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes /custom_nodes/ComfyUI_Comfyroll_CustomNodes
+#RUN git clone https://github.com/SeargeDP/SeargeSDXL /custom_nodes/SeargeSDXL
+#RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus /custom_nodes/ComfyUI_IPAdapter_plus
+#RUN git clone https://github.com/evanspearman/ComfyMath /custom_nodes/ComfyMath
+#RUN git clone https://github.com/theUpsider/ComfyUI-Logic /custom_nodes/ComfyUI-Logic
+#RUN git clone https://github.com/rgthree/rgthree-comfy /custom_nodes/rgthree-comfy
 
 # Download checkpoints/vae/LoRA to include in image based on model type
 
@@ -110,21 +109,21 @@ RUN git clone https://github.com/chflame163/ComfyUI_LayerStyle /custom_nodes/Com
 #      wget -O models/loras/lwmirXL-V1.0fp16.safetensors https://civitai.com/api/download/models/128403?type=Model&format=SafeTensor && \
 #      wget -O models/upscale_models/RealESRGAN_x4plus.pth https://huggingface.co/lllyasviel/Annotators/resolve/main/RealESRGAN_x4plus.pth \
 #    fi
-RUN if [ "$MODEL_TYPE" = "sd3" ]; then \
-      wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/checkpoints/sd3_medium_incl_clips_t5xxlfp8.safetensors https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/sd3_medium_incl_clips_t5xxlfp8.safetensors; \
-    fi
-RUN if [ "$MODEL_TYPE" = "flux1-schnell" ]; then \
-      wget -O models/unet/flux1-schnell.safetensors https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors && \
-      wget -O models/clip/clip_l.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors && \
-      wget -O models/clip/t5xxl_fp8_e4m3fn.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors && \
-      wget -O models/vae/ae.safetensors https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors; \
-    fi
-RUN if [ "$MODEL_TYPE" = "flux1-dev" ]; then \
-        wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/unet/flux1-dev.safetensors https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/flux1-dev.safetensors && \
-        wget -O models/clip/clip_l.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors && \
-        wget -O models/clip/t5xxl_fp8_e4m3fn.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors && \
-        wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/vae/ae.safetensors https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/ae.safetensors; \
-    fi
+#RUN if [ "$MODEL_TYPE" = "sd3" ]; then \
+#      wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/checkpoints/sd3_medium_incl_clips_t5xxlfp8.safetensors https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/sd3_medium_incl_clips_t5xxlfp8.safetensors; \
+#    fi
+#RUN if [ "$MODEL_TYPE" = "flux1-schnell" ]; then \
+#      wget -O models/unet/flux1-schnell.safetensors https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors && \
+#      wget -O models/clip/clip_l.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors && \
+#      wget -O models/clip/t5xxl_fp8_e4m3fn.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors && \
+#      wget -O models/vae/ae.safetensors https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors; \
+#    fi
+#RUN if [ "$MODEL_TYPE" = "flux1-dev" ]; then \
+#        wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/unet/flux1-dev.safetensors https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/flux1-dev.safetensors && \
+#        wget -O models/clip/clip_l.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors && \
+#        wget -O models/clip/t5xxl_fp8_e4m3fn.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors && \
+#        wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/vae/ae.safetensors https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/ae.safetensors; \
+#    fi
 
 
 #RUN if [ "$MODEL_TYPE" = "sdxl" ]; then \
