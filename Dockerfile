@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 #comment for no reason
 # Install comfy-cli
-RUN pip install comfy-cli
+RUN pip install comfy-cli && rm -rf ~/.cache/pip
 #RUN pip install gdown
 
 # Install ComfyUI
@@ -35,7 +35,7 @@ RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvid
 WORKDIR /comfyui
 
 # Install runpod
-RUN pip install runpod requests
+RUN pip install runpod requests && rm -rf ~/.cache/pip
 
 # Support for the network volume
 ADD src/extra_model_paths.yaml ./
@@ -51,7 +51,7 @@ RUN chmod +x /start.sh /restore_snapshot.sh
 ADD *snapshot*.json /
 
 # Restore the snapshot to install custom nodes
-RUN /restore_snapshot.sh
+RUN /restore_snapshot.sh && rm -rf ~/.cache/pip
 
 #WORKDIR /comfyui/custom_nodes
 
@@ -60,11 +60,12 @@ RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
 
 #ComfyUI-Impact-Pack
 #RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./comfyui/custom_nodes/ComfyUI-Impact-Pack
-RUN pip install -r /comfyui/custom_nodes/ComfyUI-Impact-Pack/requirements.txt --no-cache-dir
+RUN pip install -r /comfyui/custom_nodes/ComfyUI-Impact-Pack/requirements.txt --no-cache-dir && rm -rf ~/.cache/pip
 
 RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
 RUN pip install --upgrade torch torchvision torchaudio xformers \
-    --extra-index-url https://download.pytorch.org/whl/cu118 
+    --extra-index-url https://download.pytorch.org/whl/cu118 \
+    && rm -rf ~/.cache/pip
 
 #Install custom nodes manually
 
