@@ -1,5 +1,5 @@
 # Stage 1: Base image with common dependencies
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 as base
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 AS base
 
 # Prevents prompts from packages asking for user input during installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -53,51 +53,51 @@ ADD *snapshot*.json /
 # Restore the snapshot to install custom nodes
 RUN /restore_snapshot.sh
 
-WORKDIR /comfyui/custom_nodes
+#WORKDIR /comfyui/custom_nodes
 #Install custom nodes manually
 
 #ComfyUI-Impact-Pack
-RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./ComfyUI-Impact-Pack
-RUN pip install -r ./ComfyUI-Impact-Pack/requirements.txt --no-cache-dir
+#RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./ComfyUI-Impact-Pack
+#RUN pip install -r ./ComfyUI-Impact-Pack/requirements.txt --no-cache-dir
+#
+##SeargeSDXL
+#RUN git clone https://github.com/SeargeDP/SeargeSDXL.git ./SeargeSDXL
+#RUN pip install -r ./SeargeSDXL/requirements.txt --no-cache-dir
+#
+##ComfyUI-ControlNet-Aux
+#RUN git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git ./comfyui_controlnet_aux
+#RUN pip install -r ./comfyui_controlnet_aux/requirements.txt --no-cache-dir 
+#
+##ComfyUI-Comfyroll-CustomNodes
+#RUN git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes.git ./ComfyUI_Comfyroll_CustomNodes
+#RUN pip install -r ./ComfyUI_Comfyroll_CustomNodes/requirements.txt --no-cache-dir
+#
+##ComfyUI-IPAdapter-Plus
+#RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus.git ./ComfyUI_IPAdapter_plus
+#RUN pip install -r ./ComfyUI_IPAdapter_plus/requirements.txt --no-cache-dir 
+#
+##ComfyUI-Math
+#RUN git clone https://github.com/evanspearman/ComfyMath.git ./ComfyMath
+#RUN pip install -r ./ComfyMath/requirements.txt --no-cache-dir
+#
+##rgthree-comfy
+#RUN git clone https://github.com/rgthree/rgthree-comfy.git ./rgthree-comfy
+#RUN pip install -r ./rgthree-comfy/requirements.txt --no-cache-dir
+#
+##ComfyUI-Manager
+#RUN git clone https://github.com/comfyanonymous/ComfyUI-Manager.git ./ComfyUI-Manager
+#RUN pip install -r ./ComfyUI-Manager/requirements.txt --no-cache-dir    
+#
+##ComfyUI-LayerStyle
+#RUN git clone https://github.com/Kahsolt/ComfyUI-LayerStyle.git ./ComfyUI-LayerStyle
+#RUN pip install -r ./ComfyUI-LayerStyle/requirements.txt --no-cache-dir 
 
-#SeargeSDXL
-RUN git clone https://github.com/SeargeDP/SeargeSDXL.git ./SeargeSDXL
-RUN pip install -r ./SeargeSDXL/requirements.txt --no-cache-dir
-
-#ComfyUI-ControlNet-Aux
-RUN git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git ./comfyui_controlnet_aux
-RUN pip install -r ./comfyui_controlnet_aux/requirements.txt --no-cache-dir 
-
-#ComfyUI-Comfyroll-CustomNodes
-RUN git clone https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes.git ./ComfyUI_Comfyroll_CustomNodes
-RUN pip install -r ./ComfyUI_Comfyroll_CustomNodes/requirements.txt --no-cache-dir
-
-#ComfyUI-IPAdapter-Plus
-RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus.git ./ComfyUI_IPAdapter_plus
-RUN pip install -r ./ComfyUI_IPAdapter_plus/requirements.txt --no-cache-dir 
-
-#ComfyUI-Math
-RUN git clone https://github.com/evanspearman/ComfyMath.git ./ComfyMath
-RUN pip install -r ./ComfyMath/requirements.txt --no-cache-dir
-
-#rgthree-comfy
-RUN git clone https://github.com/rgthree/rgthree-comfy.git ./rgthree-comfy
-RUN pip install -r ./rgthree-comfy/requirements.txt --no-cache-dir
-
-#ComfyUI-Manager
-RUN git clone https://github.com/comfyanonymous/ComfyUI-Manager.git ./ComfyUI-Manager
-RUN pip install -r ./ComfyUI-Manager/requirements.txt --no-cache-dir    
-
-#ComfyUI-LayerStyle
-RUN git clone https://github.com/Kahsolt/ComfyUI-LayerStyle.git ./ComfyUI-LayerStyle
-RUN pip install -r ./ComfyUI-LayerStyle/requirements.txt --no-cache-dir 
-
-WORKDIR /
+#WORKDIR /
 # Start container
 CMD ["/start.sh"]
 
 # Stage 2: Download models
-FROM base as downloader
+FROM base AS downloader
 
 ARG HUGGINGFACE_ACCESS_TOKEN
 ARG MODEL_TYPE
@@ -203,7 +203,7 @@ RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision 
         #
 
 # Stage 3: Final image
-FROM base as final
+FROM base AS final
 
 # Copy models from stage 2 to the final image
 COPY --from=downloader /comfyui/models /comfyui/models
