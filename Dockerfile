@@ -62,6 +62,9 @@ RUN echo "bypass_ssl = true" >> /ComfyUI-Manager/config.ini
 RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./ComfyUI-Impact-Pack
 RUN pip install -r ./ComfyUI-Impact-Pack/requirements.txt --no-cache-dir
 
+RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
+RUN pip install --upgrade torch torchvision torchaudio xformers \
+    --extra-index-url https://download.pytorch.org/whl/cu118 
 
 #Install custom nodes manually
 
