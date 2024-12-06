@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Create symlink if it doesn't exist
+if [ ! -L "/comfyui/input" ]; then
+    ln -s /runpod-volume/input /comfyui/input
+fi
+
 # Use libtcmalloc for better memory management
 TCMALLOC="$(ldconfig -p | grep -Po "libtcmalloc.so.\d" | head -n 1)"
 export LD_PRELOAD="${TCMALLOC}"
