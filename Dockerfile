@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 
 # Clean up to reduce image size
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-
+#comment for no reason
 # Install comfy-cli
 RUN pip install comfy-cli
 #RUN pip install gdown
