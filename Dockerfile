@@ -29,7 +29,7 @@ RUN pip install comfy-cli && rm -rf ~/.cache/pip
 #RUN pip install gdown
 
 # Install ComfyUI
-RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvidia --version 0.2.7
+RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvidia --version 0.3.7
 
 # Change working directory to ComfyUI
 WORKDIR /comfyui
