@@ -54,11 +54,18 @@ ADD *snapshot*.json /
 RUN /restore_snapshot.sh
 
 #WORKDIR /comfyui/custom_nodes
-#Install custom nodes manually
+
+# Modify the config.ini file
+RUN echo "bypass_ssl = true" >> /ComfyUI-Manager/config.ini
 
 #ComfyUI-Impact-Pack
-#RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./ComfyUI-Impact-Pack
-#RUN pip install -r ./ComfyUI-Impact-Pack/requirements.txt --no-cache-dir
+RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./ComfyUI-Impact-Pack
+RUN pip install -r ./ComfyUI-Impact-Pack/requirements.txt --no-cache-dir
+
+
+#Install custom nodes manually
+
+
 #
 ##SeargeSDXL
 #RUN git clone https://github.com/SeargeDP/SeargeSDXL.git ./SeargeSDXL
@@ -108,6 +115,7 @@ WORKDIR /comfyui
 # Create necessary directories
 RUN mkdir -p models/checkpoints models/vae
 RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models
+
 
 #RUN mkdir -p custom_nodes   
 
