@@ -43,9 +43,6 @@ ADD src/extra_model_paths.yaml ./
 # Go back to the root
 WORKDIR /
 
-# Modify the config.ini file
-RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
-
 # Add scripts
 ADD src/start.sh src/restore_snapshot.sh src/rp_handler.py test_input.json ./
 RUN chmod +x /start.sh /restore_snapshot.sh
@@ -58,14 +55,17 @@ RUN /restore_snapshot.sh && rm -rf ~/.cache/pip
 
 #WORKDIR /comfyui/custom_nodes
 
+# Modify the config.ini file
+RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
+
 #ComfyUI-Impact-Pack
 #RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./comfyui/custom_nodes/ComfyUI-Impact-Pack
-#RUN pip install -r /comfyui/custom_nodes/ComfyUI-Impact-Pack/requirements.txt --no-cache-dir && rm -rf ~/.cache/pip
+RUN pip install -r /comfyui/custom_nodes/ComfyUI-Impact-Pack/requirements.txt --no-cache-dir && rm -rf ~/.cache/pip
 
-#RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
-#RUN pip install --upgrade torch torchvision torchaudio xformers \
-    #--extra-index-url https://download.pytorch.org/whl/cu118 \
-    #&& rm -rf ~/.cache/pip
+RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
+RUN pip install --upgrade torch torchvision torchaudio xformers \
+    --extra-index-url https://download.pytorch.org/whl/cu118 \
+    && rm -rf ~/.cache/pip
 
 #Install custom nodes manually
 
