@@ -29,10 +29,6 @@
             "hash": "5a049bde9cc117dafc327cded156459289097ea1",
             "disabled": false
         },
-        "https://github.com/ltdrdata/ComfyUI-Impact-Pack": {
-            "hash": "348c3dcb6b3f9e5fe42f184a01df0bb22b7bfc8d",
-            "disabled": false
-        },
         "https://github.com/ltdrdata/ComfyUI-Manager.git": {
             "hash": "8b121e1352b6507c34595ae57f862328edd38ad2",
             "disabled": false
