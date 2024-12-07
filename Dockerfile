@@ -63,9 +63,9 @@ RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./comfyui/cust
 RUN pip install -r /comfyui/custom_nodes/ComfyUI-Impact-Pack/requirements.txt --no-cache-dir && rm -rf ~/.cache/pip
 
 RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
-RUN pip install --upgrade torch torchvision torchaudio xformers \
-    --extra-index-url https://download.pytorch.org/whl/cu118 \
-    && rm -rf ~/.cache/pip
+#RUN pip install --upgrade torch torchvision torchaudio xformers \
+    #--extra-index-url https://download.pytorch.org/whl/cu118 \
+    #&& rm -rf ~/.cache/pip
 
 #Install custom nodes manually
 
