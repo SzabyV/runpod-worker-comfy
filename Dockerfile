@@ -43,12 +43,12 @@ ADD src/extra_model_paths.yaml ./
 # Go back to the root
 WORKDIR /
 
+# Modify the config.ini file
+RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
+
 # Add scripts
 ADD src/start.sh src/restore_snapshot.sh src/rp_handler.py test_input.json ./
 RUN chmod +x /start.sh /restore_snapshot.sh
-
-# Modify the config.ini file
-RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
 
 # Optionally copy the snapshot file
 ADD *snapshot*.json /
