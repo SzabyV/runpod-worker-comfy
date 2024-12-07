@@ -50,13 +50,13 @@ RUN chmod +x /start.sh /restore_snapshot.sh
 # Optionally copy the snapshot file
 ADD *snapshot*.json /
 
-# Modify the config.ini file
-RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
-
 # Restore the snapshot to install custom nodes
 RUN /restore_snapshot.sh && rm -rf ~/.cache/pip
 
 #WORKDIR /comfyui/custom_nodes
+
+# Modify the config.ini file
+RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
 
 #ComfyUI-Impact-Pack
 #RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./comfyui/custom_nodes/ComfyUI-Impact-Pack
