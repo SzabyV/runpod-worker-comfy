@@ -60,7 +60,7 @@ RUN /restore_snapshot.sh && rm -rf ~/.cache/pip
 
 #ComfyUI-Impact-Pack
 #RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./comfyui/custom_nodes/ComfyUI-Impact-Pack
-RUN pip install -r /comfyui/custom_nodes/ComfyUI-Impact-Pack/requirements.txt --no-cache-dir && rm -rf ~/.cache/pip
+#RUN pip install -r /comfyui/custom_nodes/ComfyUI-Impact-Pack/requirements.txt --no-cache-dir && rm -rf ~/.cache/pip
 
 #RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
 #RUN pip install --upgrade torch torchvision torchaudio xformers \
