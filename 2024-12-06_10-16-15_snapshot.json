@@ -1,10 +1,6 @@
 {
     "comfyui": "a178e25912b01abf436eba1cfaab316ba02d272d",
     "git_custom_nodes": {
-        "https://github.com/chflame163/ComfyUI_LayerStyle": {
-            "hash": "3375ba632434ff99dd9058126aa1a14a14c280e3",
-            "disabled": false
-        },
         "https://github.com/rgthree/rgthree-comfy": {
             "hash": "70756c044d805ffc260568ca3fe9eafaed5e6363",
             "disabled": false
