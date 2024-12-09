@@ -26,7 +26,7 @@ RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 #comment for no reason
 # Install comfy-cli
 RUN pip install comfy-cli && rm -rf ~/.cache/pip
-#RUN pip install gdown
+RUN pip install gdown
 
 # Install ComfyUI
 RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvidia --version 0.3.7
@@ -74,7 +74,8 @@ RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url http
 
 #Install custom nodes manually
 
-
+RUN gdown 1z8Kc4xrYNpwsILqqMES6uJIrz5707vRX -O ./comfyui/input/EmptyImage2.png
+RUN gdown 14f_0NPb5KO-Mtnnsz0ucAKHEa2JIfg5R -O ./comfyui/input/EmptySmallImage.png
 #
 ##SeargeSDXL
 #RUN git clone https://github.com/SeargeDP/SeargeSDXL.git ./SeargeSDXL
@@ -124,6 +125,8 @@ WORKDIR /comfyui
 # Create necessary directories
 RUN mkdir -p models/checkpoints models/vae
 RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models
+
+
 
 
 #RUN mkdir -p custom_nodes   
