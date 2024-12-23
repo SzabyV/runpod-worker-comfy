@@ -315,21 +315,14 @@ def optimize_input_images_for_online_rendering(images,wished_length = 1024):
             images = resize_image(image, wished_length)
     
 def calculate_size_of_images(images):
-    import base64
+    #import base64
     size_of_images = 0
     for image in images:
         if(image is not None):
             
-            #img = image
+            encoded_image = image["image"]
 
-            # Save the image to an in-memory buffer as PNG
-            buffer = BytesIO()
-            image.save(buffer, format="PNG")
-
-            # Get the size in bytes
-            size_in_bytes = len(buffer.getvalue())
-            
-            encoded_size = ceil(size_in_bytes / 3) * 4
+            encoded_size = len(encoded_image.encode('utf-8'))
            
             size_of_images +=encoded_size
             
