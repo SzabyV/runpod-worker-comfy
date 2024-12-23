@@ -349,16 +349,16 @@ def process_output_images_list(outputs, job_id, save_to_storage=None):
     print("List of Images method - outputs:")
 
 
-    for node_id, node_output in outputs.items():
-        print(node_output)
-        if "images" in node_output:
-            images.append(node_output["images"])
+    #for node_id, node_output in outputs.items():
+        #print(node_output)
+        #if "images" in node_output:
+            #images.append(node_output["images"])
 
-    size_of_output_images = calculate_size_of_images(images)
-    print(f"Size of Images is: {size_of_output_images}")
+    #size_of_output_images = calculate_size_of_images(images)
+    #print(f"Size of Images is: {size_of_output_images}")
 
-    if(size_of_input_images + size_of_output_images >= 19.5 * pow(10,6)):
-        print("Returned images might be too large to be able to receive them without AWS S3")
+    #if(size_of_input_images + size_of_output_images >= 19.5 * pow(10,6)):
+        #print("Returned images might be too large to be able to receive them without AWS S3")
         
     for node_id, node_output in outputs.items():
         if "images" in node_output:
