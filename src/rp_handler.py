@@ -271,7 +271,7 @@ def process_output_images(outputs, job_id):
             )
             return {
                 "status": "success",
-                "message": image_json,
+                "message": {"results": image_json},
             }
         else:
             # base64 image
@@ -494,8 +494,10 @@ def handler(job):
         print(f"Error while saving list of images: {str(e)}")
         # Get the generated image and return it as URL in an AWS bucket or as base64
         images_result = process_output_images(history[prompt_id].get("outputs"), job["id"])
-
+    print("Just about to print the results (response):")
+    
     result = {**images_result, "refresh_worker": REFRESH_WORKER}
+    print(result)
 
     return result
 
