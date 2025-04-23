@@ -51,17 +51,17 @@ jobs:
       - name: Update the ToC in the README.md
         run: npx markdown-toc README.md -i
 
-      #- name: Semantic release
-      #  uses: codfish/semantic-release-action@v3
-      #   id: semanticrelease
-      #   with:
-      #     additional-packages: |
-      #       ['@semantic-release/git', '@semantic-release/changelog', '@semantic-release/exec']
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.BLIBLA_SEMANTIC_RELEASE }}
+      - name: Semantic release
+        uses: codfish/semantic-release-action@v3
+        id: semanticrelease
+        with:
+           additional-packages: |
+             ['@semantic-release/git', '@semantic-release/changelog', '@semantic-release/exec']
+        env:
+           GITHUB_TOKEN: ${{ secrets.BLIBLA_SEMANTIC_RELEASE }}
 
       - name: Set environment variables
-      #   if: steps.semanticrelease.outputs.new-release-published == 'true'
+        if: steps.semanticrelease.outputs.new-release-published == 'true'
         run: |
            echo "DOCKERHUB_REPO=${{ vars.DOCKERHUB_REPO }}" >> $GITHUB_ENV
            echo "DOCKERHUB_IMG=${{ vars.DOCKERHUB_IMG }}" >> $GITHUB_ENV
@@ -69,7 +69,7 @@ jobs:
            echo "RELEASE_VERSION=${{ steps.semanticrelease.outputs.release-version }}" >> $GITHUB_ENV
 
       - name: Build and push the images to Docker Hub
-      #  if: steps.semanticrelease.outputs.new-release-published == 'true'
+        if: steps.semanticrelease.outputs.new-release-published == 'true'
         uses: docker/bake-action@v2
         with:
           push: true
