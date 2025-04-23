@@ -126,7 +126,7 @@ WORKDIR /comfyui
 RUN mkdir -p models/checkpoints models/vae
 RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models
 
-RUN sed -i '27a folder_names_and_paths["ipadapter"] = ([os.path.join(models_dir, "IPAdapter")], supported_pt_extensions)' folder_paths.py 
+RUN sed -i '28a folder_names_and_paths["ipadapter"] = ([os.path.join(models_dir, "IPAdapter")], supported_pt_extensions)' folder_paths.py 
 
 
 
