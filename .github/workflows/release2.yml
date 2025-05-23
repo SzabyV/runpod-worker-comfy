@@ -74,8 +74,8 @@ jobs:
         with:
           push: true
           set: |
-            *.args.DOCKERHUB_REPO=${{ env.DOCKERHUB_REPO }}
-            *.args.DOCKERHUB_IMG=${{ env.DOCKERHUB_IMG }}
+            *.args.DOCKERHUB_REPO=szabyv
+            *.args.DOCKERHUB_IMG=runpod-worker-comfy
             *.args.RELEASE_VERSION=latest-base
             *.args.HUGGINGFACE_ACCESS_TOKEN=${{ env.HUGGINGFACE_ACCESS_TOKEN }}
 
