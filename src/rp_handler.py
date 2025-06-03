@@ -497,4 +497,5 @@ def handler(job):
 
 # Start the handler only if this script is run directly
 if __name__ == "__main__":
+    print("worker-comfyui - Starting handler...")
     runpod.serverless.start({"handler": handler})

@@ -1,6 +1,6 @@
 services:
   comfyui-worker:
-    image: szabyv/runpod-worker-comfy:latest-base
+    image: szabyv/runpod-worker-comfy:latest-base2
     deploy:
       resources:
         reservations:

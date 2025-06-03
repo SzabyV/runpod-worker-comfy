@@ -2,24 +2,31 @@
     "comfyui": "a178e25912b01abf436eba1cfaab316ba02d272d",
     "git_custom_nodes": {
         "https://github.com/rgthree/rgthree-comfy": {
+            "hash": "70756c044d805ffc260568ca3fe9eafaed5e6363",
             "disabled": false
         },
         "https://github.com/evanspearman/ComfyMath": {
+            "hash": "939bb813f1c0ace959b62f20bb2da47190c4e211",
             "disabled": false
         },
         "https://github.com/cubiq/ComfyUI_IPAdapter_plus": {
+            "hash": "b188a6cb39b512a9c6da7235b880af42c78ccd0d",
             "disabled": false
         },
         "https://github.com/SeargeDP/SeargeSDXL": {
+            "hash": "2eb5edbc712329d77d1a2f5f1e6c5e64397a4a83",
             "disabled": false
         },
         "https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes": {
+            "hash": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca",
             "disabled": false
         },
         "https://github.com/Fannovel16/comfyui_controlnet_aux": {
+            "hash": "5a049bde9cc117dafc327cded156459289097ea1",
             "disabled": false
         },
         "https://github.com/ltdrdata/ComfyUI-Manager.git": {
+            "hash": "8b121e1352b6507c34595ae57f862328edd38ad2",
             "disabled": false
         }
     },

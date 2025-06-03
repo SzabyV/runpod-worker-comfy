@@ -1,5 +1,5 @@
 # Stage 1: Base image with common dependencies
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 AS base
+FROM nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04 AS base
 
 # Prevents prompts from packages asking for user input during installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -12,30 +12,40 @@ ENV CMAKE_BUILD_PARALLEL_LEVEL=8
 
 # Install Python, git and other necessary tools
 RUN apt-get update && apt-get install -y \
-    python3.10 \
-    python3-pip \
+    python3.12 \
+    python3.12-venv \
     git \
     wget \
-    ffmpeg\
     libgl1 \
-    && ln -sf /usr/bin/python3.10 /usr/bin/python \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    ffmpeg \
+    && ln -sf /usr/bin/python3.12 /usr/bin/python \
     && ln -sf /usr/bin/pip3 /usr/bin/pip
 
 # Clean up to reduce image size
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-#comment for no reason
-# Install comfy-cli
-RUN pip install comfy-cli && rm -rf ~/.cache/pip
+
+# Install uv (latest) using official installer and create isolated venv
+RUN wget -qO- https://astral.sh/uv/install.sh | sh \
+    && ln -s /root/.local/bin/uv /usr/local/bin/uv \
+    && ln -s /root/.local/bin/uvx /usr/local/bin/uvx \
+    && uv venv /opt/venv
+
+# Use the virtual environment for all subsequent commands
+ENV PATH="/opt/venv/bin:${PATH}"
+
+# Install comfy-cli + dependencies needed by it to install ComfyUI
+RUN uv pip install comfy-cli pip setuptools wheel
 RUN pip install gdown
 
 # Install ComfyUI
-RUN /usr/bin/yes | comfy --workspace /comfyui install --cuda-version 11.8 --nvidia --version 0.3.7
-
+RUN /usr/bin/yes | comfy --workspace /comfyui install --version 0.3.39 --cuda-version 12.6 --nvidia 
+#RUN /usr/bin/yes | comfy --workspace /comfyui install --version 0.2.0 --cuda-version 11.8 --nvidia
 # Change working directory to ComfyUI
 WORKDIR /comfyui
-
-# Install runpod
-RUN pip install runpod requests && rm -rf ~/.cache/pip
 
 # Support for the network volume
 ADD src/extra_model_paths.yaml ./
@@ -43,20 +53,36 @@ ADD src/extra_model_paths.yaml ./
 # Go back to the root
 WORKDIR /
 
+# Install Python runtime dependencies for the handler
+RUN uv pip install runpod requests websocket-client && rm -rf ~/.cache/pip
+
 # Add scripts
-ADD src/start.sh src/restore_snapshot.sh src/rp_handler.py test_input.json ./
-RUN chmod +x /start.sh /restore_snapshot.sh
+ADD src/start.sh src/rp_handler.py test_input.json ./
+#ADD src/start.sh src/restore_snapshot.sh src/rp_handler.py test_input.json ./
+RUN chmod +x /start.sh
+#RUN chmod +x /start.sh /restore_snapshot.sh
+
+# Add script to install custom nodes
+COPY scripts/comfy-node-install.sh /usr/local/bin/comfy-node-install
+RUN chmod +x /usr/local/bin/comfy-node-install
+
+# Prevent pip from asking for confirmation during uninstall steps in custom nodes
+ENV PIP_NO_INPUT=1
+
+# Copy helper script to switch Manager network mode at container start
+COPY scripts/comfy-manager-set-mode.sh /usr/local/bin/comfy-manager-set-mode
+RUN chmod +x /usr/local/bin/comfy-manager-set-mode
 
 # Optionally copy the snapshot file
-ADD *snapshot*.json /
+#ADD *snapshot*.json /
 
 # Restore the snapshot to install custom nodes
-RUN /restore_snapshot.sh && rm -rf ~/.cache/pip
+#RUN /restore_snapshot.sh && rm -rf ~/.cache/pip
 
 #WORKDIR /comfyui/custom_nodes
 
 # Modify the config.ini file
-RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
+#RUN echo "bypass_ssl = true" >> /comfyui/custom_nodes/ComfyUI-Manager/config.ini
 
 #ComfyUI-Impact-Pack
 RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git ./comfyui/custom_nodes/ComfyUI-Impact-Pack
@@ -66,8 +92,13 @@ RUN pip install -r /comfyui/custom_nodes/ComfyUI-Impact-Pack/requirements.txt --
 RUN git clone https://github.com/chflame163/ComfyUI_LayerStyle ./comfyui/custom_nodes/ComfyUI_LayerStyle
 RUN pip install -r /comfyui/custom_nodes/ComfyUI_LayerStyle/requirements.txt --no-cache-dir && rm -rf ~/.cache/pip
 
+RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus.git ./comfyui/custom_nodes/ComfyUI_IPAdapter_plus
+#RUN pip install -r /comfyui/custom_nodes/ComfyUI_IPAdapter_plus/requirements.txt --no-cache-dir && rm -rf ~/.cache/pip
 
-RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
+# install custom nodes using comfy-cli
+RUN comfy-node-install comfyui_controlnet_aux ComfyUI_Comfyroll_CustomNodes SeargeSDXL ComfyMath rgthree-comfy
+
+#RUN pip install --no-cache-dir torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cu118
 #RUN pip install --upgrade torch torchvision torchaudio xformers \
     #--extra-index-url https://download.pytorch.org/whl/cu118 \
     #&& rm -rf ~/.cache/pip
@@ -110,6 +141,10 @@ RUN gdown 14f_0NPb5KO-Mtnnsz0ucAKHEa2JIfg5R -O ./comfyui/input/EmptySmallImage.p
 #RUN pip install -r ./ComfyUI-LayerStyle/requirements.txt --no-cache-dir 
 
 #WORKDIR /
+
+RUN apt-get update && apt-get install -y dos2unix
+RUN dos2unix /start.sh
+
 # Start container
 CMD ["/start.sh"]
 
@@ -126,7 +161,7 @@ WORKDIR /comfyui
 RUN mkdir -p models/checkpoints models/vae
 RUN mkdir -p models/loras models/ipadapter models/controlnet models/clip_vision models/upscale_models
 
-RUN sed -i '28a folder_names_and_paths["ipadapter"] = ([os.path.join(models_dir, "IPAdapter")], supported_pt_extensions)' folder_paths.py 
+#RUN sed -i '28a folder_names_and_paths["ipadapter"] = ([os.path.join(models_dir, "IPAdapter")], supported_pt_extensions)' folder_paths.py 
 
 
 

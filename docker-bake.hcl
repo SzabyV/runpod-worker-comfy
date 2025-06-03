@@ -23,7 +23,7 @@ target "base" {
   dockerfile = "Dockerfile"
   target = "base"
   platforms = ["linux/amd64"]
-  tags = ["${DOCKERHUB_REPO}/${DOCKERHUB_IMG}:${RELEASE_VERSION}latest-base"]
+  tags = ["${DOCKERHUB_REPO}/${DOCKERHUB_IMG}:${RELEASE_VERSION}latest-base2"]
 }
 
 
